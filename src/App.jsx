@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
+import Cards from './components/Cards'
+import Form from './components/Form'
+
 const App = () => {
 
-  const [val, setVal] = useState({name: "Wani", isBanned: false});
+  const [users, setUsers] = useState([]);
+
+  const handleFormSubmitData = (data) =>{
+    setUsers([...users, data]);
+  }
+
+  const handleRemove = (id) =>{
+    setUsers(() => users.filter((item, index) =>{
+      index!=id
+    }));
+  }
 
   return (
-    <div className="m-5">
-      <h1>name: {val.name}</h1>
-      <h2>isBanned: {val.isBanned.toString()}</h2>
-      <button onClick={()=>setVal({...val, isBanned: !val.isBanned})} className={`px-3 py-1 ${val.isBanned ? "bg-blue-500" : "bg-red-500"} rounded-md`}>Change kro</button>
+    <div className="w-full h-screen bg-zinc-200 flex items-center justify-center">
+      <div className='container m-10'>
+        <Cards handleRemove={handleRemove} users={users} />
+        <Form handleFormSubmitData={handleFormSubmitData} />
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
