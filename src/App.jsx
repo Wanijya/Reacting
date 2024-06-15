@@ -1,17 +1,24 @@
 import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import Nav from "./components/Nav";
-import Routing from "./utils/Routing";
 import Home from "./components/Home";
-import User from "./components/User";
-import About from "./components/About";
+import Show from "./components/Show";
+import Services from "./components/Services";
 
 const App = () => {
   return (
-    <>
-      <Nav />
-      <Routing />
-    </>
+    <div className="p-5">
+      <nav className="flex gap-10 mb-5 justify-center">
+        <Link to="/">Home</Link>
+        <Link to="/show">Show</Link>
+        <Link to="/services">Services</Link>
+      </nav>
+      <hr className="my-5" />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/show" element={<Show />} />
+        <Route path="/services" element={<Services />} />
+      </Routes>
+    </div>
   );
 };
 
