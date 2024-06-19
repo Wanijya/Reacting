@@ -1,24 +1,23 @@
 import React from "react";
 import Home from "./components/Home";
-import { Link, Route, Routes } from "react-router-dom";
-import User from "./components/User";
-import About from "./components/About";
-import Userdetails from "./components/Userdetails";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
+import Details from "./components/Details";
+import Create from "./components/Create";
 
 const App = () => {
+  const { search, pathname } = useLocation();
   return (
-    <div className="p-2 w-1/2 m-auto">
-      <nav className="w-full flex justify-center my-10 gap-10">
-        <Link to="/">Home</Link>
-        <Link to="/user">User</Link>
-        <Link to="/about">About</Link>
-      </nav>
+    <div className="h-screen w-full flex">
+      {(pathname != "/" || search.length > 0) && (
+        <Link to="/" className="text-red-300 absolute left-[17%] top-[3%]">
+          Home
+        </Link>
+      )}
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/user" element={<User />} />
-        <Route path="/user/:id" element={<Userdetails />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/create" element={<Create />} />
+        <Route path="/details/:id" element={<Details />} />
       </Routes>
     </div>
   );
