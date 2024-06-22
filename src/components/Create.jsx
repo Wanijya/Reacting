@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { ProductContext } from "../utils/Context";
+import { nanoid } from "nanoid";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Create = () => {
+  const navigate = useNavigate();
+  const [products, setproducts] = useContext(ProductContext);
   const [title, settitle] = useState("");
   const [image, setimage] = useState("");
   const [category, setcategory] = useState("");
@@ -9,14 +15,30 @@ const Create = () => {
 
   const AddProductHandler = (e) => {
     e.preventDefault();
+
+    if (
+      title.trim().length < 5 ||
+      image.trim().length < 5 ||
+      category.trim().length < 5 ||
+      description.trim().length < 5 ||
+      price.trim().length < 1
+    ) {
+      alert("Each and every input must have at least 4 characters");
+      return;
+    }
+
     const product = {
+      id: nanoid(),
       image,
       title,
       category,
       description,
       price,
     };
-    console.log(product);
+    setproducts([...products, product]);
+    localStorage.setItem("products", JSON.stringify([...products, product]));
+    toast.success("Product Added successfully!");
+    navigate("/");
   };
   return (
     <form
